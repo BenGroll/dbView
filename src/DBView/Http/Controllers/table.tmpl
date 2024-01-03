@@ -1,0 +1,24 @@
+
+<style>
+    table, th, td {
+        border: 1px solid;
+    }
+</style>
+<span>Table: <TMPL_VAR NAME="TABLENAME">
+    <a href="/apps/dbview/" style="margin: 10%;">
+        <code id='<TMPL_VAR NAME="TABLENAME">' class="transition duration-500 text-slate-50 bg-slate-500 rounded py-1 px-2 border-r-4 hover:text-slate-500 hover:bg-slate-50">Go to different Table</code>
+    </a>
+</span>
+<table style="padding: 5%; margin: 10%;"> 
+    <form action="" method="GET"> 
+        <tr>
+            <TMPL_LOOP NAME="HEADERS">
+                <th style="padding: 15px;"><b><TMPL_VAR NAME="HName"></b></td>
+            </TMPL_LOOP>
+        </tr>
+            <TMPL_LOOP NAME="rows">
+                <TMPL_VAR NAME="row">
+            </TMPL_LOOP>
+        <!-- <input type="submit" value="Test and Save" class="transition duration-500 rounded border-r-4 px-2 pt-1 pb-2 hover:text-slate-500 hover:bg-slate-50 hover:cursor-pointer <TMPL_IF NAME=active> bg-slate-50 <TMPL_ELSE> text-slate-50 bg-slate-500 </TMPL_IF>" href="%link%"></input> -->
+    </form> 
+</table> 

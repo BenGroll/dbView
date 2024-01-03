@@ -52,6 +52,19 @@ Http::Route::group({
 
         }),
 
+        Http::Route::get('/table/{tablename}', sub {
+
+            my $request = shift;
+
+            # TODO: Implement default controller routing instead of creating
+            # TODO: an instance of the controller class.
+
+            return DBView::Http::Controllers::Controller->new()->showTable(
+                $request,
+            );
+
+        }),
+
         Http::Route::get('/messages/{id}', sub {
 
             my $request = shift;
