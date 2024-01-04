@@ -5,8 +5,11 @@ use warnings;
 
 use Data::Dumper;
 use DBView::DB;
+use DBView::TableBuilder;
 use Foundation::Appify;
 use HTML::Template;
+
+my $templateprefix = '../../../../templates/';
 
 sub new {
     my $class = shift;
@@ -29,7 +32,7 @@ sub welcome {
     foreach my $name (@$tablenames) {
         push (@tabledata, {TABLENAME => $name});
     }
-    my $tablebuttons = HTML::Template->new(filename => getFolder() .  'tablebuttons.tmpl');
+    my $tablebuttons = HTML::Template->new(filename => getFolder() . $templateprefix . 'tablebuttons.tmpl');
  
     $tablebuttons->param(TABLE_BUTTON_MENU => \@tabledata);
 
@@ -46,47 +49,21 @@ sub showTable {
     my $request = shift;
 
     my $db = DBView::DB->new();
-
     my $params = \%{$request->Vars};
-    my $tablename = $params->{tablename};
-
-    my $table = HTML::Template->new(filename => getFolder() . 'table.tmpl');
-
-    my $tablecolumns = $db->indexlist($tablename);
     
-    my @tableheaders = ();
-    foreach my $header (@$tablecolumns) {
-        push(@tableheaders, {HName => $header->{Field}});
-    }
+    my $tablename = $params->{tablename};
+    my $tablebuilder = DBView::TableBuilder->new($tablename, $db->indexlist($tablename));
 
-    my @tablerows = ();
-    my $tablerowsdata = $db->rows($params->{tablename});
-    foreach my $row (@$tablerowsdata) {
-        my @data = ();
-        foreach my $cellvalue (@$row) {
-            push (@data, {Value => $cellvalue} ); 
-        }
-        my $template = HTML::Template->new(filename => getFolder() . 'tablerow.tmpl');
-        $template->param(
-            Cells => \@data
-        );
-        # die Dumper($template->output());
-        push(@tablerows, $template->output());
-    }
-    my @tabledata = ();
-    foreach my $outputrow (@tablerows) {
-        push(@tabledata, {row => $outputrow});
-    }
+    my $headers = $tablebuilder->headers();
+    my $rows = $tablebuilder->dataFromRows($tablebuilder->rows());
 
-    $table->param(
-        TABLENAME => $tablename,
-        HEADERS => \@tableheaders,
-        rows => \@tabledata
-    );
-
+    my $table = $tablebuilder->fillTemplate($headers, $rows);
+    my $subtitle = $tablebuilder->subtitle();
+    
     my $template = &_::template('dbview::welcome', {
         email => user()->get('email'),
-        content => $table->output()
+        content => $table->output(),
+        subtitle => $subtitle->output()
     });
 
     return $template->output();

@@ -1,5 +1,27 @@
-<div>
+<style>
+    .item {
+        width: 150px;
+        height: 150px;
+        background-color: blueviolet;
+        padding: 1em;
+        border: 10px solid black;
+        border-radius: 10px;
+    }
+    .hcontainer {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        align-items: center;
+    }
+    .vcontainer {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+    }
+</style>
 
+<div>
     <div class="flex justify-end text-lg">
         <a class="text-slate-200 hover:text-slate-500 py-1 px-2 transition duration-500" href="/apps/dbview/admin" title="Administration"><i class="fa-solid fa-terminal"></i></a>
     </div>
@@ -7,15 +29,13 @@
     <div class="flex justify-center text-2xl text-slate-500 mt-24">
 
         <div class="flex flex-col">
-    
-            <div>
-
-                <span>View Your Database</span>
-                <br>
-                <TMPL_VAR NAME="CONTENT">
-                
+            <div class="vcontainer">
+                <span> View Your Database </span>
+                <TMPL_VAR NAME="SUBTITLE">
+                <div class="hcontainer">
+                    <TMPL_VAR NAME="CONTENT">
+                </div>
             </div>
-
         </div>
 
     </div>

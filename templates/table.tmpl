@@ -1,0 +1,35 @@
+
+<style>
+    table, th, td {
+        border: 1px solid;
+    }
+    table {
+        overflow-y:scroll;
+        overflow-x:scroll;
+        width: 1000px;
+        height: 500px;
+        display:block;
+    }
+    .th.fixed {
+    top: 0;
+    z-index: 2;
+    position: sticky;
+    background-color: white;
+ }
+</style>
+
+<div style="padding: 20px">
+    <table style="margin-left: 20px"> 
+        <form action="" method="GET"> 
+            <tr>
+                <TMPL_LOOP NAME="HEADERS">
+                    <th style="padding: 15px;"><b><TMPL_VAR NAME="HName"></b></td>
+                </TMPL_LOOP>
+            </tr>
+                <TMPL_LOOP NAME="rows">
+                    <TMPL_VAR NAME="row">
+                </TMPL_LOOP>
+            <!-- <input type="submit" value="Test and Save" class="transition duration-500 rounded border-r-4 px-2 pt-1 pb-2 hover:text-slate-500 hover:bg-slate-50 hover:cursor-pointer <TMPL_IF NAME=active> bg-slate-50 <TMPL_ELSE> text-slate-50 bg-slate-500 </TMPL_IF>" href="%link%"></input> -->
+        </form> 
+    </table> 
+</div>
