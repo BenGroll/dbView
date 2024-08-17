@@ -26,7 +26,7 @@ sub welcome {
 
     app()->pushToStack('scripts', servicePath('dbview') . '/script.js');
 
-    my $DB = DBView::DB->new();
+    my $DB = DBView::DB->new(app()->database);
     my $tablenames = $DB->tablelist();
     my @tabledata = ();
     foreach my $name (@$tablenames) {
@@ -48,7 +48,7 @@ sub showTable {
     my $self = shift;
     my $request = shift;
 
-    my $db = DBView::DB->new();
+    my $db = DBView::DB->new(app()->database);
     my $params = \%{$request->Vars};
     
     my $tablename = $params->{tablename};

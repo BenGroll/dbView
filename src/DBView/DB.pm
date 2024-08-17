@@ -9,13 +9,9 @@ use DBView::TableIndex;
 
 sub new {
     my $class = shift;
+    my $dbh = shift;
     
-    my @driver_names = DBI->available_drivers;
-    my $driver = "mysql";
-    my $database = "cs_bens_database";
-    my $dsn = "DBI:$driver:database=$database";
-    my $db = DBI->connect($dsn, 'root', 'admin') or die $DBI::errstr;
-    my $self = {controller => $db};
+    my $self = {controller => $dbh};
 
     bless ($self, $class);
 }

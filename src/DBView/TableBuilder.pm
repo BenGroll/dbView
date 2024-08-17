@@ -4,6 +4,7 @@ use strict;
 use warnings;
 
 use Data::Dumper;
+use Foundation::Appify;
 
 my $templateprefix = '../../templates/';
 
@@ -16,7 +17,7 @@ sub new {
         tablename => $tablename,
         tablecolumns => $tablecolumns,
         tabletemplate => HTML::Template->new(filename => getFolder() . $templateprefix . 'table.tmpl'),
-        db => DBView::DB->new()
+        db => DBView::DB->new(app()->database())
     };
     # die Dumper($self);
     bless ($self, $class);
