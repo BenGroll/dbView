@@ -74,7 +74,11 @@ sub gateway {
 
     my $gateway = $self->SUPER::gateway();
 
-    $gateway->{name} = lc $gateway->{name};
+    unless ($gateway) {
+        return;
+    }
+
+    $gateway->{name} = uc $gateway->{name};
 
     return $gateway;
 }

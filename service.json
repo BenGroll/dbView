@@ -1,5 +1,6 @@
 {
     "name": "DBView",
     "link": "/apps/dbview",
-    "provider": "/src/ServiceProvider.pm"
+    "provider": "/src/ServiceProvider.pm",
+    "onlyAdmin" : 1
 }
